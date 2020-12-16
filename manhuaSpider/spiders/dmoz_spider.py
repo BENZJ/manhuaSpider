@@ -5,8 +5,12 @@ from scrapy import FormRequest
 import json
 from scrapy import Request
 baseurl = "http://m.qiman6.com"
-imagepath="https://p.pstatp.com/origin/"
-chapterpath="http://m.qiman6.com/12896/"
+"""
+狐妖小红娘 12896
+大神仙    14289
+"""
+mahuacode = "14289" 
+chapterpath= baseurl+"/"+mahuacode+"/"
 class DmozSpider(scrapy.Spider):
     name = "dmoz"
     # start_urls = [
