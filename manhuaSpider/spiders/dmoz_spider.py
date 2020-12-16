@@ -4,7 +4,7 @@ from manhuaSpider.items import ImagespiderItem
 from scrapy import FormRequest
 import json
 from scrapy import Request
-
+baseurl = "http://m.qiman6.com"
 imagepath="https://p.pstatp.com/origin/"
 chapterpath="http://m.qiman6.com/12896/"
 class DmozSpider(scrapy.Spider):
@@ -16,8 +16,21 @@ class DmozSpider(scrapy.Spider):
     #     # "http://m.qiman6.com/12896/1051946.html"     
     # ]
     def start_requests(self):
+        url = "http://m.qiman6.com/12896/"
+        yield Request(url, callback=self.parseindex)
         url = "http://m.qiman6.com/bookchapter/"
         yield FormRequest(url, formdata={"id": "12896", "id2":"1"})
+
+    def parseindex(self, response):
+        urls = response.xpath('//div[@class="catalog-list"]/ul/li').re(r"href=\".*?\"")
+        for i in range(len(urls)):
+            urls[i] = urls[i][ 6: -1]
+        names = response.xpath('//div[@class="catalog-list"]/ul/li/a').re(r">.*?<")
+        for i in range(len(names)):
+             names[i] = names[i][ 1: -1]
+        for i in range(len(urls)):
+            yield Request (baseurl+urls[i], callback=self.parsechapter , meta={'chaptername': names[i]})
+
     def parse(self, response):
         print(response)
         response = json.loads(response.text)
