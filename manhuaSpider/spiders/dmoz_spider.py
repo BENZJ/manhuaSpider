@@ -20,10 +20,9 @@ class DmozSpider(scrapy.Spider):
     #     # "http://m.qiman6.com/12896/1051946.html"     
     # ]
     def start_requests(self):
-        url = "http://m.qiman6.com/12896/"
-        yield Request(url, callback=self.parseindex)
+        yield Request(chapterpath, callback=self.parseindex)
         url = "http://m.qiman6.com/bookchapter/"
-        yield FormRequest(url, formdata={"id": "12896", "id2":"1"})
+        yield FormRequest(url, formdata={"id": mahuacode, "id2":"1"})
 
     def parseindex(self, response):
         urls = response.xpath('//div[@class="catalog-list"]/ul/li').re(r"href=\".*?\"")
