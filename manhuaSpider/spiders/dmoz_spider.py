@@ -20,11 +20,11 @@ class DmozSpider(scrapy.Spider):
     #     # "http://m.qiman6.com/12896/1051946.html"     
     # ]
     def start_requests(self):
-        yield Request(chapterpath, callback=self.parseindex)
         url = "http://m.qiman6.com/bookchapter/"
         yield FormRequest(url, formdata={"id": mahuacode, "id2":"1"})
 
     def parseindex(self, response):
+        startindex = int(response.meta['startindex'])
         urls = response.xpath('//div[@class="catalog-list"]/ul/li').re(r"href=\".*?\"")
         for i in range(len(urls)):
             urls[i] = urls[i][ 6: -1]
@@ -32,14 +32,18 @@ class DmozSpider(scrapy.Spider):
         for i in range(len(names)):
              names[i] = names[i][ 1: -1]
         for i in range(len(urls)):
-            yield Request (baseurl+urls[i], callback=self.parsechapter , meta={'chaptername': names[i]})
+            yield Request (baseurl+urls[i], callback=self.parsechapter , meta={'chaptername': ("%05d" % startindex)+names[i]})
+            startindex+=1
 
     def parse(self, response):
         print(response)
         response = json.loads(response.text)
+        k = 0
         for index in response:
+            k+=1
             newurl = chapterpath+index["id"]+".html"
-            yield Request(url=newurl, callback=self.parsechapter,  meta={'chaptername': index["name"]},)
+            yield Request(url=newurl, callback=self.parsechapter,  meta={'chaptername': ("%05d" % (len(response)-k))+index["name"]},)
+        yield Request(chapterpath, callback=self.parseindex,meta={'startindex', len(response)})
         pass
 
     # 获取并解析漫画网页顺序
