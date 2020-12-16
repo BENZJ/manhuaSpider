@@ -11,8 +11,9 @@ class DmozSpider(scrapy.Spider):
     name = "dmoz"
     # start_urls = [
     #     # "http://m.qiman6.com/12896/1051883.html",
-    #     "http://m.qiman6.com/12896/1051945.html",
-    #     #"http://m.qiman6.com/bookchapter/"      
+    #     # "http://m.qiman6.com/12896/1051945.html",
+    #     #"http://m.qiman6.com/bookchapter/"
+    #     # "http://m.qiman6.com/12896/1051946.html"     
     # ]
     def start_requests(self):
         url = "http://m.qiman6.com/bookchapter/"
@@ -39,9 +40,8 @@ class DmozSpider(scrapy.Spider):
         lenval = len(vals)
         vals[0] = vals[0][2:]
         vals[lenval-1] = vals[lenval-1][:-2]
-        if vals[lenval-1] == "":
-            vals = vals[0:-1]
-            lenval -=1
+        if lenval>=26 :
+            vals[25]="p"
         pattern = re.compile(r"\".*?\"")
         urls = pattern.findall(urls)
         for i in range(len(urls)):
