@@ -40,11 +40,11 @@ class DmozSpider(scrapy.Spider):
         print(response)
         response = json.loads(response.text)
         k = 0
+        yield Request(chapterpath, callback=self.parseindex,meta={'startindex':len(response)})
         for index in response:
             k+=1
             newurl = chapterpath+index["id"]+".html"
             yield Request(url=newurl, callback=self.parsechapter,  meta={'chaptername': ("%05d" % (len(response)-k+1))+"_"+index["name"]},)
-        yield Request(chapterpath, callback=self.parseindex,meta={'startindex', len(response)})
         pass
 
     # 获取并解析漫画网页顺序
