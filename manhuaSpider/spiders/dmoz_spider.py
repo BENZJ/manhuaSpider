@@ -65,8 +65,6 @@ class DmozSpider(scrapy.Spider):
         lenval = len(vals)
         vals[0] = vals[0][2:]
         vals[lenval-1] = vals[lenval-1][:-2]
-        if lenval>=26 :
-            vals[25]="p"
         pattern = re.compile(r"\".*?\"")
         urls = pattern.findall(urls)
         for i in range(len(urls)):
@@ -80,7 +78,10 @@ class DmozSpider(scrapy.Spider):
                 if(not self.needchange(i)):
                     relurl = relurl+i
                 elif (self.charToNum(i)<lenval):
-                    relurl = relurl+vals[self.charToNum(i)]
+                    if(vals[self.charToNum(i)]!=""):
+                        relurl = relurl+vals[self.charToNum(i)]
+                    else:
+                        relurl = relurl+i
                 else:
                     relurl = relurl+i
             item = ImagespiderItem()

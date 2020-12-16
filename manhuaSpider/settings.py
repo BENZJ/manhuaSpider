@@ -19,7 +19,7 @@ NEWSPIDER_MODULE = 'manhuaSpider.spiders'
 #USER_AGENT = 'manhuaSpider (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 
 # 配置数据保存路径，为当前工程目录下的 images 目录中
