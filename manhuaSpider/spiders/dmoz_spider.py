@@ -25,16 +25,20 @@ class DmozSpider(scrapy.Spider):
         yield FormRequest(url, formdata={"id": mahuacode, "id2":"1"})
 
     def parseindex(self, response):
-        startindex = int(response.meta['startindex'])
         urls = response.xpath('//div[@class="catalog-list"]/ul/li').re(r"href=\".*?\"")
+        varlen = len(urls)
+        startindex = int(response.meta['startindex'])
+        startindex += varlen
         for i in range(len(urls)):
             urls[i] = urls[i][ 6: -1]
         names = response.xpath('//div[@class="catalog-list"]/ul/li/a').re(r">.*?<")
         for i in range(len(names)):
              names[i] = names[i][ 1: -1]
+        
         for i in range(len(urls)):
-            yield Request (baseurl+urls[i], callback=self.parsechapter , meta={'chaptername': ("%05d" % (startindex+1))+"_"+names[i]})
-            startindex+=1
+            yield Request (baseurl+urls[i], callback=self.parsechapter , meta={'chaptername': ("%05d" % (startindex))+"_"+names[i]})
+            startindex-=1
+
 
     def parse(self, response):
         print(response)
