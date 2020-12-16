@@ -9,25 +9,25 @@ imagepath="https://p.pstatp.com/origin/"
 chapterpath="http://m.qiman6.com/12896/"
 class DmozSpider(scrapy.Spider):
     name = "dmoz"
-    start_urls = [
-        # "http://m.qiman6.com/12896/1051883.html",
-        "http://m.qiman6.com/12896/1051945.html",
-        #"http://m.qiman6.com/bookchapter/"      
-    ]
-    # def start_requests(self):
-    #     url = "http://m.qiman6.com/bookchapter/"
-    #     yield FormRequest(url, formdata={"id": "12896", "id2":"1"})
-    # def parse(self, response):
-    #     print(response)
-    #     response = json.loads(response.text)
-    #     for index in response:
-    #         newurl = chapterpath+index["id"]+".html"
-    #         yield Request(url=newurl, callback=self.parsechapter,  meta={'chaptername': index["name"]},)
-    #     pass
+    # start_urls = [
+    #     # "http://m.qiman6.com/12896/1051883.html",
+    #     "http://m.qiman6.com/12896/1051945.html",
+    #     #"http://m.qiman6.com/bookchapter/"      
+    # ]
+    def start_requests(self):
+        url = "http://m.qiman6.com/bookchapter/"
+        yield FormRequest(url, formdata={"id": "12896", "id2":"1"})
+    def parse(self, response):
+        print(response)
+        response = json.loads(response.text)
+        for index in response:
+            newurl = chapterpath+index["id"]+".html"
+            yield Request(url=newurl, callback=self.parsechapter,  meta={'chaptername': index["name"]},)
+        pass
 
     # 获取并解析漫画网页顺序
     # def parsechapter(self, response):
-    def parse(self, response):
+    def parsechapter(self, response):
         urls = ''
         vals = []
         for sel in response.xpath('//script').re(r'\[.*?\]'):
