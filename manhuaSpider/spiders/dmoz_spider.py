@@ -8,8 +8,9 @@ baseurl = "http://m.qiman6.com"
 """
 狐妖小红娘 12896
 大神仙    14289
+长歌行    14391
 """
-mahuacode = "14289" 
+mahuacode = "14391" 
 chapterpath= baseurl+"/"+mahuacode+"/"
 class DmozSpider(scrapy.Spider):
     name = "dmoz"
@@ -32,7 +33,7 @@ class DmozSpider(scrapy.Spider):
         for i in range(len(names)):
              names[i] = names[i][ 1: -1]
         for i in range(len(urls)):
-            yield Request (baseurl+urls[i], callback=self.parsechapter , meta={'chaptername': ("%05d" % startindex)+names[i]})
+            yield Request (baseurl+urls[i], callback=self.parsechapter , meta={'chaptername': ("%05d" % (startindex+1))+"_"+names[i]})
             startindex+=1
 
     def parse(self, response):
@@ -42,7 +43,7 @@ class DmozSpider(scrapy.Spider):
         for index in response:
             k+=1
             newurl = chapterpath+index["id"]+".html"
-            yield Request(url=newurl, callback=self.parsechapter,  meta={'chaptername': ("%05d" % (len(response)-k))+index["name"]},)
+            yield Request(url=newurl, callback=self.parsechapter,  meta={'chaptername': ("%05d" % (len(response)-k+1))+"_"+index["name"]},)
         yield Request(chapterpath, callback=self.parseindex,meta={'startindex', len(response)})
         pass
 
