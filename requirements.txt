@@ -1,0 +1,4 @@
+image==1.5.33
+img2pdf==0.4.0
+PyPDF2==1.26.0
+Scrapy==2.4.1

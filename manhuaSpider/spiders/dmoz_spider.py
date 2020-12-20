@@ -6,11 +6,13 @@ import json
 from scrapy import Request
 baseurl = "http://m.qiman6.com"
 """
-狐妖小红娘 12896
-大神仙    14289
-长歌行    14391
+狐妖小红娘           12896
+大神仙              14289
+长歌行              14391
+女子学院的男生       12645
+校园默示录           2025
 """
-mahuacode = "14391" 
+mahuacode = "14289" 
 chapterpath= baseurl+"/"+mahuacode+"/"
 class DmozSpider(scrapy.Spider):
     name = "dmoz"
