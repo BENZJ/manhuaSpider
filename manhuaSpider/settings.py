@@ -25,7 +25,10 @@ ROBOTSTXT_OBEY = False
 # 配置数据保存路径，为当前工程目录下的 images 目录中
 project_dir = os.path.abspath(os.path.dirname(__file__))
 IMAGES_STORE = os.path.join(project_dir, 'images')
-ITEM_PIPELINES = {'manhuaSpider.pipelines.downloadImagePipeline': 1}
+ITEM_PIPELINES = {
+    "manhuaSpider.pipelines.ManhuaspiderPipeline": 1,
+    'manhuaSpider.pipelines.downloadImagePipeline': 100
+}
 # 过期天数
 IMAGES_EXPIRES = 90  # 90天内抓取的都不会被重抓
 

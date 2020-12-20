@@ -12,9 +12,14 @@ baseurl = "http://m.qiman6.com"
 女子学院的男生       12645
 校园默示录           2025
 """
-mahuacode = "14289" 
-chapterpath= baseurl+"/"+mahuacode+"/"
+
+
 class DmozSpider(scrapy.Spider):
+    def __init__(self, mahuacode=14289, *args, **kwargs):
+        super(DmozSpider, self).__init__(*args, **kwargs)
+        self.mahuacode = mahuacode
+        self.chapterpath= baseurl+"/"+self.mahuacode+"/"
+        self.__dict__.update(kwargs)
     name = "dmoz"
     # start_urls = [
     #     # "http://m.qiman6.com/12896/1051883.html",
@@ -24,7 +29,7 @@ class DmozSpider(scrapy.Spider):
     # ]
     def start_requests(self):
         url = "http://m.qiman6.com/bookchapter/"
-        yield FormRequest(url, formdata={"id": mahuacode, "id2":"1"})
+        yield FormRequest(url, formdata={"id": self.mahuacode, "id2":"1"})
 
     def parseindex(self, response):
         urls = response.xpath('//div[@class="catalog-list"]/ul/li').re(r"href=\".*?\"")
@@ -43,13 +48,12 @@ class DmozSpider(scrapy.Spider):
 
 
     def parse(self, response):
-        print(response)
         response = json.loads(response.text)
         k = 0
-        yield Request(chapterpath, callback=self.parseindex,meta={'startindex':len(response)})
+        yield Request(self.chapterpath, callback=self.parseindex,meta={'startindex':len(response)})
         for index in response:
             k+=1
-            newurl = chapterpath+index["id"]+".html"
+            newurl = self.chapterpath+index["id"]+".html"
             yield Request(url=newurl, callback=self.parsechapter,  meta={'chaptername': ("%05d" % (len(response)-k+1))+"_"+index["name"]},)
         pass
 

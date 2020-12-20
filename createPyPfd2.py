@@ -20,4 +20,3 @@ file = open("./out/PyPDF2test.pdf", "wb")
 file.write(pdf_bytes) 
 file.close() 
 print("Successfully made pdf file") 
-

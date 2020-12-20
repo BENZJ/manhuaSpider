@@ -20,3 +20,10 @@ class ImagespiderItem(scrapy.Item):
     chaptername = scrapy.Field()
     # zhangjie = scrapy.Field()
     pass
+
+# 用来存储数据库判断这本书这一章节是否爬过
+class bookChapterItem(scrapy.Item):
+    bookid = scrapy.Field()
+    url = scrapy.Field()
+    chaptername = scrapy.Field()
+    pass
