@@ -1,5 +1,4 @@
 import img2pdf 
-from PIL import Image 
 import os 
 from PyPDF2 import PdfFileMerger
 
@@ -16,9 +15,9 @@ for i in range(0, len(list)):
         img_file = os.path.join(chiledRootDir, childList[j])
         print(img_file)
         images.append(img_file)
-    pdf_bytes = img2pdf.convert(images)
-    file = open("PyPDF2test.pdf", "wb")
-    file.write(pdf_bytes) 
-    file.close() 
-    print("Successfully made pdf file") 
+pdf_bytes = img2pdf.convert(images)
+file = open("./out/PyPDF2test.pdf", "wb")
+file.write(pdf_bytes) 
+file.close() 
+print("Successfully made pdf file") 
 
