@@ -14,4 +14,6 @@ RUN pip3 install -r /manhuaSpider/requirements.txt
 ENV LANG=zh_CN.UTF-8
 ENV LC_ALL=zh_CN.UTF-8
 ENV LANGUAGE=zh_CN.UTF-8
+ENV PYTHONIOENCODING=utf-8 
+WORKDIR /manhuaSpider/manhuaSpider/
 VOLUME [ "/manhuaSpider/manhuaSpider/images", "/manhuaSpider/out"]
