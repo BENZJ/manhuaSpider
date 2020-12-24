@@ -57,7 +57,6 @@ def mkpdf(rootdir, savename):
     file.close() 
     print("Successfully made pdf file") 
 
-bookcode=["14289","12780",]
 
 db = pymysql.connect(
     host='49.235.207.129',
@@ -69,9 +68,11 @@ db = pymysql.connect(
 )
         # 通过cursor执行增删查改
 cursor = db.cursor()
-
+sql = "select bookcode from Book"
+cursor.execute(sql)
+bookcode = cursor.fetchall() 
 for code in bookcode:
-    subprocess.Popen('scrapy crawl bookindex -a bookid={0}'.format(code), shell=True).wait()
+    subprocess.Popen('scrapy crawl bookindex -a bookid={0}'.format(code[0]), shell=True).wait()
 try: 
     # 执行sql
     sql = "SELECT * FROM Book_Chapter WHERE flag=-1"
