@@ -10,6 +10,7 @@ scrapy crawl dmoz
 nohup docker build -t benzj/manhuaspider  . 2>&1
 docker run -it  -v /root/images:/manhuaSpider/manhuaSpider/images\
                 -v /root/out:/manhuaSpider/manhuaSpider/out  \
+                --name=manhuaspider \
                 benzj/manhuaspider /bin/bash
 cd manhuaSpider
 python3 createSplit.py

@@ -35,11 +35,11 @@ def sendMail(bookname:str, pdfDir:str ) :
         server.login("benz_auto@163.com", "TRXGGYPBEUIFJFES")
         # 发送邮件（参数1：发件人邮箱，参数2：若干收件人邮箱，参数3：把邮件内容格式改为str）
         server.sendmail("benz_auto@163.com", ["549614989@qq.com" ], m.as_string())
-        print('发送邮件成功')
+        print('发送邮件成功'.decode('utf-8').encode('gb18030'))
         server.quit()
         pass
     except Exception as e:
-        print ("Error: 无法发送邮件,",e)
+        print ("Error: 无法发送邮件".decode('utf-8').encode('gb18030'),e)
 # sendMail("元尊/00573_第272话上 拍碎剑丸/","./manhuaSpider/out/元尊/00573_第272话上 拍碎剑丸")
 # exit()
 def mkpdf(rootdir, savename):
