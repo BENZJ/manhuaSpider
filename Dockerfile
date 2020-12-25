@@ -15,5 +15,5 @@ ENV LANG=zh_CN.UTF-8
 ENV LC_ALL=zh_CN.UTF-8
 ENV LANGUAGE=zh_CN.UTF-8
 ENV PYTHONIOENCODING=utf-8 
-WORKDIR /manhuaSpider/manhuaSpider/
+WORKDIR /manhuaSpider/
 VOLUME [ "/manhuaSpider/manhuaSpider/images", "/manhuaSpider/out"]

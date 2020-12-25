@@ -109,6 +109,7 @@ while True:
         pass
     finally:
         # 关闭数据库链接
+        cursor.close()
         db.close()
     sleep(300)
 
